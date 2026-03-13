@@ -1,0 +1,29 @@
+{
+  "items": [
+    { "name": "Buffalo Wings", "price": 12.99, "category": "Appetizers", "sku": "REST-APP-001" },
+    { "name": "Mozzarella Sticks", "price": 9.99, "category": "Appetizers", "sku": "REST-APP-002" },
+    { "name": "Loaded Nachos", "price": 13.99, "category": "Appetizers", "sku": "REST-APP-003" },
+    { "name": "Bruschetta", "price": 10.99, "category": "Appetizers", "sku": "REST-APP-004" },
+    { "name": "Calamari", "price": 11.99, "category": "Appetizers", "sku": "REST-APP-005" },
+    { "name": "Grilled Salmon", "price": 24.99, "category": "Entrees", "sku": "REST-ENT-001" },
+    { "name": "NY Strip Steak", "price": 29.99, "category": "Entrees", "sku": "REST-ENT-002" },
+    { "name": "Chicken Parmesan", "price": 18.99, "category": "Entrees", "sku": "REST-ENT-003" },
+    { "name": "Fish and Chips", "price": 16.99, "category": "Entrees", "sku": "REST-ENT-004" },
+    { "name": "Pasta Alfredo", "price": 15.99, "category": "Entrees", "sku": "REST-ENT-005" },
+    { "name": "BBQ Ribs", "price": 22.99, "category": "Entrees", "sku": "REST-ENT-006" },
+    { "name": "Caesar Salad", "price": 12.99, "category": "Entrees", "sku": "REST-ENT-007" },
+    { "name": "French Fries", "price": 5.99, "category": "Sides", "sku": "REST-SID-001" },
+    { "name": "Coleslaw", "price": 4.99, "category": "Sides", "sku": "REST-SID-002" },
+    { "name": "Mac and Cheese", "price": 6.99, "category": "Sides", "sku": "REST-SID-003" },
+    { "name": "Garden Salad", "price": 5.49, "category": "Sides", "sku": "REST-SID-004" },
+    { "name": "Onion Rings", "price": 6.49, "category": "Sides", "sku": "REST-SID-005" },
+    { "name": "Coca-Cola", "price": 2.99, "category": "Drinks", "sku": "REST-DRK-001" },
+    { "name": "Iced Tea", "price": 2.99, "category": "Drinks", "sku": "REST-DRK-002" },
+    { "name": "Draft Beer", "price": 6.99, "category": "Drinks", "sku": "REST-DRK-003" },
+    { "name": "House Wine", "price": 8.99, "category": "Drinks", "sku": "REST-DRK-004" },
+    { "name": "Lemonade", "price": 3.49, "category": "Drinks", "sku": "REST-DRK-005" },
+    { "name": "Chocolate Cake", "price": 8.99, "category": "Desserts", "sku": "REST-DES-001" },
+    { "name": "Cheesecake", "price": 9.99, "category": "Desserts", "sku": "REST-DES-002" },
+    { "name": "Ice Cream Sundae", "price": 7.99, "category": "Desserts", "sku": "REST-DES-003" }
+  ]
+}

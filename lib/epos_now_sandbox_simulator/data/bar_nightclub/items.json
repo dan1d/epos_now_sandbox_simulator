@@ -1,0 +1,26 @@
+{
+  "items": [
+    { "name": "IPA Pint", "price": 7.50, "category": "Draft Beer", "sku": "BAR-DRF-001" },
+    { "name": "Lager Pint", "price": 6.50, "category": "Draft Beer", "sku": "BAR-DRF-002" },
+    { "name": "Stout Pint", "price": 7.00, "category": "Draft Beer", "sku": "BAR-DRF-003" },
+    { "name": "Wheat Beer", "price": 7.50, "category": "Draft Beer", "sku": "BAR-DRF-004" },
+    { "name": "Pale Ale", "price": 7.00, "category": "Draft Beer", "sku": "BAR-DRF-005" },
+    { "name": "Corona", "price": 6.00, "category": "Bottled Beer", "sku": "BAR-BTL-001" },
+    { "name": "Heineken", "price": 5.50, "category": "Bottled Beer", "sku": "BAR-BTL-002" },
+    { "name": "Budweiser", "price": 5.00, "category": "Bottled Beer", "sku": "BAR-BTL-003" },
+    { "name": "Seltzer", "price": 5.50, "category": "Bottled Beer", "sku": "BAR-BTL-004" },
+    { "name": "Margarita", "price": 12.00, "category": "Cocktails", "sku": "BAR-COK-001" },
+    { "name": "Old Fashioned", "price": 14.00, "category": "Cocktails", "sku": "BAR-COK-002" },
+    { "name": "Mojito", "price": 12.00, "category": "Cocktails", "sku": "BAR-COK-003" },
+    { "name": "Espresso Martini", "price": 13.00, "category": "Cocktails", "sku": "BAR-COK-004" },
+    { "name": "Long Island", "price": 14.00, "category": "Cocktails", "sku": "BAR-COK-005" },
+    { "name": "House Red Wine", "price": 9.00, "category": "Wine", "sku": "BAR-WIN-001" },
+    { "name": "House White Wine", "price": 9.00, "category": "Wine", "sku": "BAR-WIN-002" },
+    { "name": "Prosecco", "price": 10.00, "category": "Wine", "sku": "BAR-WIN-003" },
+    { "name": "Chicken Wings", "price": 10.99, "category": "Bar Snacks", "sku": "BAR-SNK-001" },
+    { "name": "Loaded Fries", "price": 8.99, "category": "Bar Snacks", "sku": "BAR-SNK-002" },
+    { "name": "Nachos", "price": 11.99, "category": "Bar Snacks", "sku": "BAR-SNK-003" },
+    { "name": "Slider Trio", "price": 12.99, "category": "Bar Snacks", "sku": "BAR-SNK-004" },
+    { "name": "Mixed Nuts", "price": 5.99, "category": "Bar Snacks", "sku": "BAR-SNK-005" }
+  ]
+}

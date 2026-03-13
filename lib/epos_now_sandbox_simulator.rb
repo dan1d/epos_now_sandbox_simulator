@@ -1,0 +1,49 @@
+# frozen_string_literal: true
+
+require "zeitwerk"
+require "logger"
+require "json"
+require "rest-client"
+require "dotenv"
+
+# Load environment variables
+Dotenv.load
+
+module EposNowSandboxSimulator
+  VERSION = "0.1.0"
+
+  class Error < StandardError; end
+  class ConfigurationError < Error; end
+  class ApiError < Error; end
+
+  class << self
+    attr_writer :configuration
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def configure
+      yield(configuration)
+    end
+
+    def logger
+      configuration.logger
+    end
+
+    def root
+      File.expand_path("..", __dir__)
+    end
+  end
+end
+
+# Set up Zeitwerk autoloader
+loader = Zeitwerk::Loader.for_gem
+# Migrations and factories follow ActiveRecord conventions, not Zeitwerk naming
+loader.ignore(File.expand_path("epos_now_sandbox_simulator/db", __dir__))
+loader.setup
+
+# :nocov:
+# Eager load in production
+loader.eager_load if ENV["RACK_ENV"] == "production"
+# :nocov:

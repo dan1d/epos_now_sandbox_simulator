@@ -1,0 +1,309 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "epos_now_sandbox_simulator"
+require "thor"
+
+module EposNowSandboxSimulator
+  class CLI < Thor
+    class_option :verbose, type: :boolean, aliases: "-v", desc: "Enable verbose logging"
+    class_option :merchant_index, type: :numeric, aliases: "-i", desc: "Device index (0-based, from .env.json)"
+
+    desc "merchants", "List available devices from .env.json"
+    def merchants
+      puts "Epos Now Sandbox Simulator - Available Devices"
+      puts "=" * 55
+
+      config = EposNowSandboxSimulator.configuration
+      devices = config.available_merchants
+
+      if devices.empty?
+        puts "No devices found in .env.json"
+        return
+      end
+
+      puts "\n#{"Index".ljust(6)} #{"Device Name".ljust(30)} Credentials"
+      puts "-" * 55
+
+      devices.each_with_index do |d, idx|
+        creds = d[:has_credentials] ? "OK" : "MISSING"
+        puts "#{idx.to_s.ljust(6)} #{(d[:name] || "unnamed").ljust(30)} #{creds}"
+      end
+
+      puts "\nUse: simulate <command> -i <index>"
+    end
+
+    desc "setup", "Set up POS entities (categories, products, tender types)"
+    option :business_type, type: :string, default: "restaurant",
+                           desc: "Business type (restaurant, cafe_bakery, bar_nightclub, retail_general)"
+    def setup
+      configure_logging
+
+      puts "Epos Now Sandbox Simulator - Entity Setup"
+      puts "=" * 50
+
+      generator = Generators::EntityGenerator.new(business_type: options[:business_type].to_sym)
+      stats = generator.setup_all
+
+      puts "\nSetup complete!"
+      puts "  Tender types: #{stats[:tender_types]}"
+      puts "  Categories:   #{stats[:categories]}"
+      puts "  Products:     #{stats[:products]}"
+    end
+
+    desc "generate", "Generate orders for today"
+    option :count, type: :numeric, aliases: "-n", desc: "Number of orders to generate"
+    option :refund_percentage, type: :numeric, aliases: "-r", default: 5,
+                               desc: "Percentage of orders to refund (0-100, default 5)"
+    def generate
+      configure_logging
+
+      puts "Epos Now Sandbox Simulator - Order Generation"
+      puts "=" * 50
+
+      generator = Generators::OrderGenerator.new(refund_percentage: options[:refund_percentage])
+      orders = generator.generate_today(count: options[:count])
+
+      puts "\nGenerated #{orders.size} orders!"
+    end
+
+    desc "day", "Generate a realistic full day of operations"
+    option :multiplier, type: :numeric, aliases: "-x", default: 1.0, desc: "Order multiplier (0.5 = slow, 2.0 = busy)"
+    option :refund_percentage, type: :numeric, aliases: "-r", default: 5,
+                               desc: "Percentage of orders to refund (0-100, default 5)"
+    def day
+      configure_logging
+
+      puts "Epos Now Sandbox Simulator - Full Day Generation"
+      puts "=" * 50
+
+      generator = Generators::OrderGenerator.new(refund_percentage: options[:refund_percentage])
+      orders = generator.generate_realistic_day(multiplier: options[:multiplier])
+
+      puts "\nGenerated #{orders.size} orders!"
+    end
+
+    desc "rush", "Generate a meal period rush"
+    option :period, type: :string, aliases: "-p", default: "dinner", desc: "Meal period (breakfast, lunch, happy_hour, dinner, late_night)"
+    option :count, type: :numeric, aliases: "-n", default: 15, desc: "Number of orders"
+    def rush
+      configure_logging
+
+      period = options[:period].to_sym
+      count = options[:count]
+
+      puts "Epos Now Sandbox Simulator - #{period.to_s.upcase} Rush"
+      puts "=" * 50
+
+      generator = Generators::OrderGenerator.new
+      orders = generator.generate_rush(period: period, count: count)
+
+      puts "\nGenerated #{orders.size} orders!"
+    end
+
+    desc "full", "Full setup + order generation"
+    option :business_type, type: :string, default: "restaurant", desc: "Business type"
+    option :multiplier, type: :numeric, aliases: "-x", default: 1.0, desc: "Order multiplier"
+    option :refund_percentage, type: :numeric, aliases: "-r", default: 5
+    def full
+      configure_logging
+
+      puts "Epos Now Sandbox Simulator - Full Setup + Generation"
+      puts "=" * 50
+
+      # Setup
+      generator = Generators::EntityGenerator.new(business_type: options[:business_type].to_sym)
+      stats = generator.setup_all
+      puts "Setup: #{stats[:categories]} categories, #{stats[:products]} products"
+
+      # Generate
+      order_gen = Generators::OrderGenerator.new(refund_percentage: options[:refund_percentage])
+      orders = order_gen.generate_realistic_day(multiplier: options[:multiplier])
+      puts "\nGenerated #{orders.size} orders!"
+    end
+
+    desc "status", "Show current entity counts"
+    def status
+      configure_logging
+
+      puts "Epos Now Sandbox Simulator - Status"
+      puts "=" * 50
+
+      services = Services::EposNow::ServicesManager.new
+
+      categories = services.inventory.fetch_categories
+      products = services.inventory.fetch_products
+      tender_types = services.tender.fetch_tender_types
+
+      puts "\nEpos Now API:"
+      puts "  Categories:   #{categories.size}"
+      puts "  Products:     #{products.size}"
+      puts "  Tender Types: #{tender_types.size}"
+
+      return unless Database.connected?
+
+      puts "\nLocal Database:"
+      puts "  Orders:   #{Models::SimulatedOrder.count}"
+      puts "  Payments: #{Models::SimulatedPayment.count}"
+      puts "  API Logs: #{Models::ApiRequest.count}"
+    end
+
+    desc "summary", "Show daily summary"
+    option :date, type: :string, aliases: "-d", desc: "Date (YYYY-MM-DD, default today)"
+    def summary
+      configure_logging
+      connect_db
+
+      date = options[:date] ? Date.parse(options[:date]) : Date.today
+
+      puts "Epos Now Sandbox Simulator - Daily Summary (#{date})"
+      puts "=" * 50
+
+      summary = Models::DailySummary.find_by(summary_date: date)
+
+      unless summary
+        puts "No summary found for #{date}. Generating..."
+        summary = Models::DailySummary.generate_for!(date)
+      end
+
+      puts "\n  Orders:    #{summary.order_count}"
+      puts "  Payments:  #{summary.payment_count}"
+      puts "  Refunds:   #{summary.refund_count}"
+      puts "  Revenue:   $#{format("%.2f", summary.total_revenue / 100.0)}"
+      puts "  Tax:       $#{format("%.2f", summary.total_tax / 100.0)}"
+      puts "  Tips:      $#{format("%.2f", summary.total_tips / 100.0)}"
+      puts "  Discounts: $#{format("%.2f", summary.total_discounts / 100.0)}"
+
+      return unless summary.breakdown.present?
+
+      puts "\n  Breakdown:"
+      summary.breakdown.each do |key, values|
+        puts "    #{key}: #{values}"
+      end
+    end
+
+    desc "orders", "List recent orders"
+    option :limit, type: :numeric, aliases: "-l", default: 20, desc: "Number of orders to show"
+    def orders
+      configure_logging
+      connect_db
+
+      puts "Epos Now Sandbox Simulator - Recent Orders"
+      puts "=" * 70
+
+      records = Models::SimulatedOrder.order(created_at: :desc).limit(options[:limit])
+
+      puts "\n#{"ID".ljust(8)} #{"Txn ID".ljust(10)} #{"Status".ljust(10)} #{"Total".ljust(10)} #{"Period".ljust(12)} Date"
+      puts "-" * 70
+
+      records.each do |o|
+        total = "$#{format("%.2f", o.total / 100.0)}"
+        period = (o.meal_period || "-").ljust(12)
+        txn_id = o.epos_now_transaction_id.to_s.ljust(10)
+        puts "#{o.id[0..6].ljust(8)} #{txn_id} #{o.status.ljust(10)} #{total.ljust(10)} #{period} #{o.business_date}"
+      end
+
+      puts "\nTotal: #{records.size} orders shown"
+    end
+
+    desc "audit", "Show recent API requests"
+    option :limit, type: :numeric, aliases: "-l", default: 20, desc: "Number of requests to show"
+    def audit
+      configure_logging
+      connect_db
+
+      puts "Epos Now Sandbox Simulator - API Audit Log"
+      puts "=" * 80
+
+      records = Models::ApiRequest.recent.limit(options[:limit])
+
+      puts "\n#{"Method".ljust(7)} #{"Status".ljust(7)} #{"Duration".ljust(10)} #{"Resource".ljust(20)} URL"
+      puts "-" * 80
+
+      records.each do |r|
+        short_url = r.url.sub("https://api.eposnowhq.com/", "")
+        status = (r.response_status || "-").to_s.ljust(7)
+        duration = "#{r.duration_ms}ms".ljust(10)
+        resource = (r.resource_type || "-").ljust(20)
+        puts "#{r.http_method.ljust(7)} #{status} #{duration} #{resource} #{short_url}"
+      end
+    end
+
+    desc "business_types", "List available business types"
+    def business_types
+      puts "Epos Now Sandbox Simulator - Business Types"
+      puts "=" * 50
+
+      Generators::DataLoader::BUSINESS_TYPES.each do |bt|
+        loader = Generators::DataLoader.new(business_type: bt)
+        cats = loader.load_categories
+        items = loader.load_items
+        puts "\n  #{bt}: #{cats.size} categories, #{items.size} items"
+        cats.each { |c| puts "    - #{c["name"]}" }
+      end
+    end
+
+    # ==========================================
+    # DATABASE MANAGEMENT
+    # ==========================================
+
+    desc "db SUBCOMMAND", "Database management (create, migrate, seed, reset)"
+    def db(subcommand)
+      configure_logging
+
+      case subcommand
+      when "create"
+        url = Database.database_url
+        Database.create!(url)
+        puts "Database created"
+      when "migrate"
+        connect_db
+        Database.migrate!
+        puts "Migrations complete"
+      when "seed"
+        connect_db
+        Database.seed!
+        puts "Seeding complete"
+      when "reset"
+        puts "This will DROP and recreate the database. Are you sure? (yes/no)"
+        confirm = $stdin.gets.chomp
+        if confirm == "yes"
+          url = Database.database_url
+          Database.drop!(url)
+          Database.create!(url)
+          Database.connect!(url)
+          Database.migrate!
+          Database.seed!
+          puts "Database reset complete"
+        else
+          puts "Cancelled"
+        end
+      else
+        puts "Unknown subcommand: #{subcommand}. Use: create, migrate, seed, reset"
+      end
+    end
+
+    private
+
+    def configure_logging
+      EposNowSandboxSimulator.configuration.log_level = Logger::DEBUG if options[:verbose]
+
+      # Load specific merchant if index given
+      return unless options[:merchant_index]
+
+      EposNowSandboxSimulator.configuration.load_merchant(index: options[:merchant_index])
+    end
+
+    def connect_db
+      url = Database.database_url
+      Database.connect!(url)
+    rescue StandardError => e
+      puts "Database not available: #{e.message}"
+      puts "Some commands require a database. Run: simulate db create && simulate db migrate"
+      exit 1
+    end
+  end
+end
+
+EposNowSandboxSimulator::CLI.start(ARGV)

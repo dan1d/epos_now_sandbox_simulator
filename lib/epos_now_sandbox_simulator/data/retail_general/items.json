@@ -1,0 +1,17 @@
+{
+  "items": [
+    { "name": "Phone Charger", "price": 14.99, "category": "Electronics", "sku": "RET-ELC-001" },
+    { "name": "Bluetooth Speaker", "price": 29.99, "category": "Electronics", "sku": "RET-ELC-002" },
+    { "name": "USB Cable", "price": 9.99, "category": "Electronics", "sku": "RET-ELC-003" },
+    { "name": "T-Shirt", "price": 19.99, "category": "Clothing", "sku": "RET-CLO-001" },
+    { "name": "Baseball Cap", "price": 14.99, "category": "Clothing", "sku": "RET-CLO-002" },
+    { "name": "Socks Pack", "price": 8.99, "category": "Clothing", "sku": "RET-CLO-003" },
+    { "name": "Candle", "price": 12.99, "category": "Home & Garden", "sku": "RET-HOM-001" },
+    { "name": "Plant Pot", "price": 9.99, "category": "Home & Garden", "sku": "RET-HOM-002" },
+    { "name": "Picture Frame", "price": 11.99, "category": "Home & Garden", "sku": "RET-HOM-003" },
+    { "name": "Hand Cream", "price": 7.99, "category": "Health & Beauty", "sku": "RET-HLT-001" },
+    { "name": "Lip Balm", "price": 4.99, "category": "Health & Beauty", "sku": "RET-HLT-002" },
+    { "name": "Snack Bar", "price": 2.99, "category": "Groceries", "sku": "RET-GRC-001" },
+    { "name": "Water Bottle", "price": 1.99, "category": "Groceries", "sku": "RET-GRC-002" }
+  ]
+}

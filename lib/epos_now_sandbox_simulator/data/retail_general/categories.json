@@ -1,0 +1,9 @@
+{
+  "categories": [
+    { "name": "Electronics", "sort_order": 1, "description": "Electronic devices and accessories" },
+    { "name": "Clothing", "sort_order": 2, "description": "Apparel and accessories" },
+    { "name": "Home & Garden", "sort_order": 3, "description": "Home goods and garden supplies" },
+    { "name": "Health & Beauty", "sort_order": 4, "description": "Health and beauty products" },
+    { "name": "Groceries", "sort_order": 5, "description": "Food and grocery items" }
+  ]
+}

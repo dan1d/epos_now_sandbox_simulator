@@ -1,0 +1,9 @@
+{
+  "categories": [
+    { "name": "Appetizers", "sort_order": 1, "description": "Starters and small plates" },
+    { "name": "Entrees", "sort_order": 2, "description": "Main course dishes" },
+    { "name": "Sides", "sort_order": 3, "description": "Side dishes" },
+    { "name": "Drinks", "sort_order": 4, "description": "Beverages" },
+    { "name": "Desserts", "sort_order": 5, "description": "Sweets and treats" }
+  ]
+}

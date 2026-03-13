@@ -1,0 +1,120 @@
+plugins:
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "vendor/**/*"
+    - "tmp/**/*"
+
+# -- Layout --
+Layout/LineLength:
+  Max: 140
+
+# -- Metrics --
+Metrics/MethodLength:
+  Max: 80
+  Exclude:
+    - "spec/**/*"
+
+Metrics/AbcSize:
+  Max: 90
+  Exclude:
+    - "spec/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "*.gemspec"
+    - "lib/**/factories/**/*"
+
+Metrics/ClassLength:
+  Max: 500
+
+Metrics/CyclomaticComplexity:
+  Max: 25
+
+Metrics/PerceivedComplexity:
+  Max: 25
+
+Metrics/ParameterLists:
+  Max: 10
+
+# -- Gemspec --
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+# -- Lint --
+Lint/IneffectiveAccessModifier:
+  Enabled: false
+
+Lint/UselessConstantScoping:
+  Enabled: false
+
+# -- Naming --
+Naming/PredicateMethod:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: false
+
+# -- Style --
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: always
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+# -- RSpec --
+RSpec/ExampleLength:
+  Max: 40
+
+RSpec/MultipleExpectations:
+  Max: 8
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+RSpec/RepeatedExampleGroupDescription:
+  Enabled: false
+
+RSpec/RepeatedExample:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/NoExpectationExample:
+  Enabled: false
+
+RSpec/IdenticalEqualityAssertion:
+  Enabled: false

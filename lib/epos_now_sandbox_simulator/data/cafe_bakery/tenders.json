@@ -1,0 +1,8 @@
+{
+  "tenders": [
+    { "name": "Cash", "description": "Cash payment", "weight": 30 },
+    { "name": "Credit Card", "description": "Credit card payment", "weight": 50 },
+    { "name": "Debit Card", "description": "Debit card payment", "weight": 15 },
+    { "name": "Gift Card", "description": "Gift card payment", "weight": 5 }
+  ]
+}

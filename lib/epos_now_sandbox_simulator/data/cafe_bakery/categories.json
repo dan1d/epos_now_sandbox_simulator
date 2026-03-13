@@ -1,0 +1,9 @@
+{
+  "categories": [
+    { "name": "Hot Drinks", "sort_order": 1, "description": "Coffee, tea, and hot beverages" },
+    { "name": "Cold Drinks", "sort_order": 2, "description": "Iced and cold beverages" },
+    { "name": "Pastries", "sort_order": 3, "description": "Fresh baked pastries" },
+    { "name": "Sandwiches", "sort_order": 4, "description": "Fresh sandwiches and wraps" },
+    { "name": "Cakes", "sort_order": 5, "description": "Cakes and slices" }
+  ]
+}

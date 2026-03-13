@@ -1,0 +1,28 @@
+{
+  "items": [
+    { "name": "Espresso", "price": 3.50, "category": "Hot Drinks", "sku": "CAFE-HOT-001" },
+    { "name": "Cappuccino", "price": 4.50, "category": "Hot Drinks", "sku": "CAFE-HOT-002" },
+    { "name": "Latte", "price": 4.75, "category": "Hot Drinks", "sku": "CAFE-HOT-003" },
+    { "name": "Hot Chocolate", "price": 4.25, "category": "Hot Drinks", "sku": "CAFE-HOT-004" },
+    { "name": "English Breakfast Tea", "price": 3.25, "category": "Hot Drinks", "sku": "CAFE-HOT-005" },
+    { "name": "Iced Latte", "price": 5.25, "category": "Cold Drinks", "sku": "CAFE-CLD-001" },
+    { "name": "Iced Americano", "price": 4.75, "category": "Cold Drinks", "sku": "CAFE-CLD-002" },
+    { "name": "Smoothie", "price": 5.99, "category": "Cold Drinks", "sku": "CAFE-CLD-003" },
+    { "name": "Fresh Orange Juice", "price": 4.50, "category": "Cold Drinks", "sku": "CAFE-CLD-004" },
+    { "name": "Croissant", "price": 3.50, "category": "Pastries", "sku": "CAFE-PAS-001" },
+    { "name": "Pain au Chocolat", "price": 3.75, "category": "Pastries", "sku": "CAFE-PAS-002" },
+    { "name": "Blueberry Muffin", "price": 3.99, "category": "Pastries", "sku": "CAFE-PAS-003" },
+    { "name": "Cinnamon Roll", "price": 4.25, "category": "Pastries", "sku": "CAFE-PAS-004" },
+    { "name": "Scone", "price": 3.25, "category": "Pastries", "sku": "CAFE-PAS-005" },
+    { "name": "Club Sandwich", "price": 8.99, "category": "Sandwiches", "sku": "CAFE-SAN-001" },
+    { "name": "BLT", "price": 7.99, "category": "Sandwiches", "sku": "CAFE-SAN-002" },
+    { "name": "Avocado Toast", "price": 9.50, "category": "Sandwiches", "sku": "CAFE-SAN-003" },
+    { "name": "Panini", "price": 8.50, "category": "Sandwiches", "sku": "CAFE-SAN-004" },
+    { "name": "Chicken Wrap", "price": 8.99, "category": "Sandwiches", "sku": "CAFE-SAN-005" },
+    { "name": "Carrot Cake", "price": 5.50, "category": "Cakes", "sku": "CAFE-CAK-001" },
+    { "name": "Victoria Sponge", "price": 5.25, "category": "Cakes", "sku": "CAFE-CAK-002" },
+    { "name": "Brownie", "price": 4.50, "category": "Cakes", "sku": "CAFE-CAK-003" },
+    { "name": "Lemon Drizzle", "price": 4.99, "category": "Cakes", "sku": "CAFE-CAK-004" },
+    { "name": "Red Velvet Slice", "price": 5.75, "category": "Cakes", "sku": "CAFE-CAK-005" }
+  ]
+}

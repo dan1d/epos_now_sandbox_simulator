@@ -1,0 +1,9 @@
+{
+  "categories": [
+    { "name": "Draft Beer", "sort_order": 1, "description": "Beers on tap" },
+    { "name": "Bottled Beer", "sort_order": 2, "description": "Bottled and canned beers" },
+    { "name": "Cocktails", "sort_order": 3, "description": "Mixed drinks" },
+    { "name": "Wine", "sort_order": 4, "description": "Wine by the glass" },
+    { "name": "Bar Snacks", "sort_order": 5, "description": "Bar food and snacks" }
+  ]
+}
